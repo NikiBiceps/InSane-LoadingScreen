@@ -1,0 +1,408 @@
+@font-face {
+    font-family: "BankGothic";
+    src: url("bankgothic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #000;
+    cursor: none;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#video-backdrop, #youtube-backdrop {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+    filter: brightness(0.5);
+    z-index: -1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5vh 5vw;
+    box-sizing: border-box;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.top .logo-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.top h1 {
+    font-family: "BankGothic", sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.top h2 {
+    font-family: "BankGothic", sans-serif;
+    font-size: clamp(1rem, 2vw, 2rem);
+    color: #ddd;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.socials {
+    display: flex;
+    gap: 1em;
+}
+
+.discord-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-family: "BankGothic", sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.discord-link:hover {
+    background-color: #31377c;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #5865F2;
+}
+
+.discord-link img {
+    height: 25px;
+    width: auto;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: absolute;
+    bottom: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 2;
+}
+
+.loading-section {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+}
+
+.rules-button, .staff-button {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: 2px solid #fecc66;
+    padding: 15px 30px;
+    font-family: "BankGothic", sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: auto;
+    white-space: nowrap;
+}
+
+.rules-button:hover {
+    background-color: #fecc66;
+    color: #000;
+    transform: scale(1.05);
+}
+
+.staff-button {
+    border: 2px solid #8A2BE2;
+}
+
+.staff-button:hover {
+    background-color: #8A2BE2;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+
+.loading-text {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    text-transform: uppercase;
+    font-family: "BankGothic", sans-serif;
+    letter-spacing: 2px;
+}
+
+.loadbar-container {
+    width: 100%;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+}
+
+.thingy {
+    height: 100%;
+    background: linear-gradient(90deg, #fecc66, #ff8c00);
+    width: 0%;
+    transition: width 0.5s ease-out;
+}
+
+.rules-modal, .staff-modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: rgba(17, 17, 17, 0.95);
+    margin: 5vh auto;
+    padding: 30px;
+    border: 1px solid #fecc66;
+    width: 70%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.info-box {
+    text-align: left;
+    flex: 1;
+    min-width: 200px;
+}
+
+.info-box h3 {
+    font-family: "BankGothic", sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #fecc66;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: white;
+    text-decoration: none;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+
+.staff-modal-content {
+    background-color: rgba(17, 17, 17, 0.95);
+    margin: 5vh auto;
+    padding: 30px;
+    border: 1px solid #8A2BE2;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    position: relative;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    text-align: center;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.staff-modal-content h3 {
+    font-family: "BankGothic", sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.staff-member-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.staff-member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px #8A2BE2;
+}
+
+.staff-pfp {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #8A2BE2;
+    margin-bottom: 15px;
+}
+
+.staff-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.staff-name {
+    font-family: "BankGothic", sans-serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.staff-role {
+    font-size: 1rem;
+    color: #fecc66;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.staff-description {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+
+body, a, button {
+    cursor: none;
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 30px; 
+    height: 30px;
+    border: 2px solid #fecc66;
+    border-radius: 50%;
+    
+    pointer-events: none;
+    z-index: 9999;
+    
+    left: 0;
+    top: 0;
+}
+
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #fecc66;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-cursor.hover {
+    transform: scale(1.5);
+    border-color: #8A2BE2;
+}
+
+.custom-cursor.hover::after {
+     background-color: #8A2BE2;
+}

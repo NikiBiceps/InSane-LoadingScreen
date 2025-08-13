@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+    <title>InSane Loading Screen</title>
+</head>
+<body>
+    <div class="video-container">
+        <div class="backdrop" id="image-backdrop"></div>
+        <video id="video-backdrop" autoplay muted loop playsinline></video>
+        <iframe id="youtube-backdrop" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="overlay">
+        <div class="top">
+            <div class="logo-container">
+                <h1 title="Server Name">StrixRoleplay</h1>
+                <h2>kur</h2>
+            </div>
+            <div class="socials">
+                <a href="https://discord.gg/" target="_blank" class="discord-link">
+                    <img src="images/discord_logo.png" alt="Discord">
+                    <span>Join our Discord!</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="center-content">
+            <button id="show-rules-btn" class="rules-button">Show Rules & Keybinds</button>
+            <button id="show-staff-btn" class="staff-button">Meet the Staff</button>
+        </div>
+
+        <div class="loading-section">
+            <div class="loading-text">
+                <span id="loading-stage">Loading...</span> <span id="loading-emojis"></span>
+            </div>
+            <div class="loadbar-container">
+                <div class="thingy"></div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="rules-modal" id="rules-modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-rules-btn">&times;</span>
+            <div class="info-container">
+                <div class="info-box">
+                    <h3>Server Rules</h3>
+                    <p>Правило 1</p>
+                    <p>Правило 2</p>
+                    <p>Правило 3</p>
+                </div>
+                <div class="info-box">
+                    <h3>Key Binds</h3>
+                    <p>Нещо</p>
+                    <p>Нещо</p>
+                    <p>Нещо</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="staff-modal" id="staff-modal">
+        <div class="staff-modal-content">
+            <span class="close-button" id="close-staff-btn">&times;</span>
+            <h3>The Staff Team</h3>
+            <div class="staff-grid">
+
+                <div class="staff-member-card">
+                    <img class="staff-pfp" src="images/kur123.png" alt="Ownera">
+                    <div class="staff-info">
+                        <span class="staff-name">InSane</span>
+                        <span class="staff-role">Owner</span>
+                        <p class="staff-description">Kurcho</p>
+                    </div>
+                </div>
+
+                <div class="staff-member-card">
+                    <img class="staff-pfp" src="images/kur123.png" alt="Ownera">
+                    <div class="staff-info">
+                        <span class="staff-name">InSane</span>
+                        <span class="staff-role">Owner</span>
+                        <p class="staff-description">Kurcho2</p>
+                    </div>
+                </div>
+                
+                <!-- Може да добавяте повече като следвате образеца горе -->
+            </div>
+            </div>
+        </div>
+    
+    <div class="custom-cursor" id="custom-cursor"></div>
+</body>
+</html>
